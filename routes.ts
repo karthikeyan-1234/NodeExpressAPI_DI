@@ -1,13 +1,10 @@
 import express from "express"
 import container from './container';
+import findProduct from "./Controllers/PostController";
 
 const router = express.Router();
 const postService = container.resolve('IPostService');
 
-router.get('/', (req, res) => {
-    const result = postService.findPost(1);
-    console.log(result);
-    res.send('Hello World  !!!!')
-  })
+router.get('/', findProduct)
 
 export default router;

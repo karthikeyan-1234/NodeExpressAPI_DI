@@ -1,6 +1,6 @@
 import Post from "../Models/Post";
 
 export default interface IPostRepo {
-    find(id: number): Post;
+    find(id: number): Post | null;
   }
   

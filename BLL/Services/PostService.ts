@@ -19,7 +19,7 @@ export class PostService implements IPostService
         throw new Error("Method not implemented.");
     }
 
-    findPost(id: number): Post {
+    findPost(id: number): Post|null {
         return this.IPostRepo.find(id);
     }
     

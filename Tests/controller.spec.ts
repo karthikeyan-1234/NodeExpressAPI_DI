@@ -14,8 +14,6 @@ describe('Post Controller Test', () => {
 
 
     //Arrange
-
-
     beforeEach(() => {
         tempPost = {
             id: 3

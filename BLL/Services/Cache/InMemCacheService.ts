@@ -9,12 +9,38 @@ export class InMemCacheService implements ICacheService{
         this.cache = new NodeCache();
     }
 
-    getCache(key: string): Promise<string | null> {
-        throw console.error();
-        
+    async getCache(key: string): Promise<string | null> {
+
+        console.log("Inside Node GetCache");
+
+        return new Promise<string | null>((resolve, reject) => {
+
+            console.log("Trying to get cache");
+
+            var res = this.cache.get(key);
+            console.log(res);
+            if(res != null || res != undefined)
+            {
+                console.log("res is not null in Node GetCache");
+                console.log(res);
+                resolve(res as string);
+            }
+            else
+            {
+                console.log("No Cache");
+                resolve(null);
+            }
+          });        
     }
-    setCache(key: string, obj: string): Promise<boolean| null> {
-        throw console.error();
+
+    async setCache(key: string, obj: string,expires: number): Promise<boolean| null> {
+
+        console.log("Setting Node Cache for value " + obj);
+
+        return new Promise<boolean | null>((resolve, reject) => {
+            var res = this.cache.set(key,obj,expires);
+            resolve(res);
+          });
     }
 
 }

@@ -28,9 +28,13 @@ export class PostService implements IPostService
 
         var res = await this.ICacheService.getCache("Post_" + id);
 
+        console.log("PostService result of cache");
+        console.log(res);
+
         if(res == null)
         {
             const post = this.IPostRepo.find(id);
+            console.log(post);
 
             if(post != null)
             {
@@ -39,7 +43,7 @@ export class PostService implements IPostService
                 return Promise.resolve(post);
             }
             else
-                return null;
+                return Promise.resolve(null);
         }
         else{
             console.log("From CacheService ");

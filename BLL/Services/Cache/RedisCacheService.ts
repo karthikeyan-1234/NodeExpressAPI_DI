@@ -32,7 +32,7 @@ export class RedisCacheService implements ICacheService{
 
     async setCache(key: string, obj: string, expires: number): Promise<boolean | null> {
 
-        console.log("Setting Cache for value " + obj);
+        console.log("Setting Redis Cache for value " + obj);
 
         return new Promise<boolean | null>(async (resolve, reject) => {
             await this.redisClient.set(key, obj).then((res: any) => {

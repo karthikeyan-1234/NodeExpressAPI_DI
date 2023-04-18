@@ -1,6 +1,5 @@
 import * as Redis from 'redis'
 import ICacheService from '../../../Contracts/ICacheService';
-import Post from '../../../Models/Post';
 
 export class RedisCacheService implements ICacheService{
 

@@ -39,6 +39,8 @@ export class RedisCacheService implements ICacheService{
                 this.redisClient.expire(key,expires);
                   console.log(`Successfully set cache with key '${key}'`);
                   resolve(true);
+            },(err: any) => {
+                reject(false);
             })
         })
     }

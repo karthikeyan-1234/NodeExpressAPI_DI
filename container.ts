@@ -10,6 +10,7 @@ import {
     asClass,
     InjectionMode,
   } from 'awilix';
+import { RedisCacheService } from "./BLL/Services/Cache/RedisCacheService";
 
 
 const container = createContainer({
@@ -18,7 +19,8 @@ const container = createContainer({
 
 container.register({
   IPostRepo: asClass<PostMongoRepo>(PostMongoRepo).singleton(),   //Replace PostMongRepo with PostSQLRepo to change the dependency
-  IPostService: asClass<PostService>(PostService).singleton() //Replace PostService with PostServiceLogger service that implements IPostService to change the dependency
+  IPostService: asClass<PostService>(PostService).singleton(), //Replace PostService with PostServiceLogger service that implements IPostService to change the dependency
+  ICacheService: asClass<RedisCacheService>(RedisCacheService).singleton()
 })
 
 export default container;

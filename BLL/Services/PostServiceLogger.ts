@@ -19,7 +19,7 @@ export class PostServiceLogger implements IPostService
         throw new Error("Method not implemented.");
     }
 
-    findPost(id: number): Post {
+    async findPost(id: number): Promise<Post | null> {
         console.log("Initiated from PostService Logger");
         return this.IPostRepo.find(id);
     }

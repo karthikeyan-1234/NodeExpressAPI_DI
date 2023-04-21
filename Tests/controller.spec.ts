@@ -34,6 +34,11 @@ describe('Post Controller Test', () => {
             find: jest.fn()
         } as jest.Mocked<IPostRepo>;
 
+        cacheServiceMock = {
+            getCache: jest.fn().mockResolvedValue(null),
+            setCache: jest.fn().mockResolvedValue(null),
+          };
+
 
         postRepoMock.find.mockImplementation((id:number) => {
             if (id === 2) {
@@ -47,10 +52,7 @@ describe('Post Controller Test', () => {
             return null;
         })
 
-        cacheServiceMock = {
-            getCache: jest.fn().mockResolvedValue(null),
-            setCache: jest.fn().mockResolvedValue(null),
-          };
+
     })
 
     // it('findProduct action endpoint should find product', async () => {      

@@ -37,7 +37,20 @@ describe('Post Controller Test', () => {
         cacheServiceMock = {
             getCache: jest.fn().mockResolvedValue(null),
             setCache: jest.fn().mockResolvedValue(null),
-          };
+          } as any;
+
+          cacheServiceMock.getCache.mockImplementation((key:string) => {
+            if(key == "2")
+            {
+              return Promise.resolve(JSON.stringify({
+                id: 2,
+                title: "Post 2",
+                content: "Content 2",
+              }));
+            }
+
+            return Promise.resolve(null);
+          })
 
 
         postRepoMock.find.mockImplementation((id:number) => {

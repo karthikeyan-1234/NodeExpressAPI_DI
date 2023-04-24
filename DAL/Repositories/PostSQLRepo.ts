@@ -3,9 +3,9 @@ import Post from "../../Models/Post";
 
 export class PostSQLRepo implements IPostRepo{
    
-    find(id: number): Post | null {
+    async find(id: number): Promise<Post> {
         const newPost = new Post(id);
         newPost.id = id;
-        return null;
+        return newPost;
     }
 }

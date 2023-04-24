@@ -39,21 +39,21 @@ describe('Post Controller Test', () => {
             setCache: jest.fn().mockResolvedValue(null),
           } as any;
 
-          cacheServiceMock.getCache.mockImplementation((key:string) => {
-            if(key == "2")
-            {
-              return Promise.resolve(JSON.stringify({
-                id: 2,
-                title: "Post 2",
-                content: "Content 2",
-              }));
-            }
+        cacheServiceMock.getCache.mockImplementation((key:string) => {
+          if(key == "2")
+          {
+            return Promise.resolve(JSON.stringify({
+              id: 2,
+              title: "Post 2",
+              content: "Content 2",
+            }));
+          }
 
-            return Promise.resolve(null);
-          })
+          return Promise.resolve(null);
+        })
 
 
-        postRepoMock.find.mockImplementation((id:number) => {
+        postRepoMock.find.mockImplementation(async (id:number) => {
             if (id === 2) {
             return {
                 id: 2,
@@ -68,10 +68,6 @@ describe('Post Controller Test', () => {
 
     })
 
-    // it('findProduct action endpoint should find product', async () => {      
-    //     const result = await findProductAction(request,response);       //Act
-    //     expect(result).not.toBeNull()                                   //Assert
-    // })
 
     it('findPost function in PostService should return post', async() => {        
         const service = new PostService({ IPostRepo: postRepoMock ,ICacheService: cacheServiceMock})    //Act

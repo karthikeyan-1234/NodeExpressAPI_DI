@@ -8,7 +8,7 @@ const findProduct = async function (req: Request ,res: Response){
 
     console.log("---Controller----")
 
-    const result = await postService.findPost(1);
+    const result = await postService.findPost(15);
 
     if(result != null)
     {

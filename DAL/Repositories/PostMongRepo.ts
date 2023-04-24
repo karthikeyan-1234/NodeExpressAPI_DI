@@ -24,6 +24,8 @@ export class PostMongoRepo implements IPostRepo{
 
     async find(id: number): Promise<Post | null> {
 
+        console.log("---Mongo Repo----");
+
         const newPost = new Post(id);
         //newPost.id = id + 1;
 
@@ -36,6 +38,6 @@ export class PostMongoRepo implements IPostRepo{
             return null;
         });     
         
-        return result as Promise<Post>;
+        return result;
     }
 }

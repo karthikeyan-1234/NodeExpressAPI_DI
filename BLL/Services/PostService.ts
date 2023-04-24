@@ -24,6 +24,8 @@ export class PostService implements IPostService
 
     async findPost(id: number): Promise<Post | null> {   
         
+        console.log("---Service----");
+
         console.log("Inside findPost of PostService");
 
         var res = await this.ICacheService.getCache("Post_" + id);
@@ -33,11 +35,12 @@ export class PostService implements IPostService
 
         if(res == null)
         {
-            const post = this.IPostRepo.find(id);
+            const post = await this.IPostRepo.find(id);
             console.log(post);
 
             if(post != null)
             {
+                console.log("---Service----");
                 console.log("From repo");
                 await this.ICacheService.setCache("Post_" + id,JSON.stringify(post),10);
                 return Promise.resolve(post);

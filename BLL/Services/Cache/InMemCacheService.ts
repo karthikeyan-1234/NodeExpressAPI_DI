@@ -11,6 +11,8 @@ export class InMemCacheService implements ICacheService{
 
     async getCache(key: string): Promise<string | null> {
 
+        console.log("---Cache----");
+
         console.log("Inside Node GetCache");
 
         return new Promise<string | null>((resolve, reject) => {
@@ -34,6 +36,8 @@ export class InMemCacheService implements ICacheService{
     }
 
     async setCache(key: string, obj: string,expires: number): Promise<boolean| null> {
+
+        console.log("---Cache----");
 
         console.log("Setting Node Cache for value " + obj);
 

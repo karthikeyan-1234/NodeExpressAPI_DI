@@ -5,5 +5,6 @@ export default interface IPostRepo {
     add(newPost: Post): Promise<Post | null>;
     update(updPost: Post): Promise<Post | null>;
     getAll(): Promise<Post[] | null>;
+    delete(delPost: Post):Promise<boolean>;
   }
   

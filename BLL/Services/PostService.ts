@@ -60,19 +60,22 @@ export class PostService implements IPostService
         await this.ICacheService.setCache("Post_" + post!.id,JSON.stringify(post),10);
         return Promise.resolve(post);
     }
-    deletePost(delPost: Post): Post {
-        throw new Error("Method not implemented.");
+    deletePost(delPost: Post): Promise<boolean> {
+        try
+        {
+            return Promise.resolve(this.IPostRepo.delete(delPost));            
+        }
+        catch(err){
+            return Promise.resolve(false);
+        }
     }
 
     async findPost(id: number): Promise<Post | null> {   
         
-        console.log("---Service----");
-
-        console.log("Inside findPost of PostService");
-
+        console.log("---FindPost Service----");
         var res = await this.ICacheService.getCache("Post_" + id);
 
-        console.log("PostService result of cache");
+        console.log("FindPost result of cache");
         console.log(res);
 
         if(res == null)

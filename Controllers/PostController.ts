@@ -63,4 +63,18 @@ const getAllProducts = async function(req: Request, res: Response){
         res.status(404).send("No records found");
 }
 
-export default {findProduct,addProduct, updateProduct, getAllProducts};
+const deleteProduct = async function(req: Request, res: Response){
+    console.log("---Delete Product endpoint---");
+    
+    const result = await postService.deletePost(req.body);
+
+    if(result != false)
+    {
+        console.log(result);
+        res.status(204).send(JSON.stringify(result));
+    }
+    else
+        res.status(404).send("Unable to delete data. No record found");   
+}
+
+export default {findProduct,addProduct, updateProduct, getAllProducts, deleteProduct};

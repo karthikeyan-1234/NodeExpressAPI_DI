@@ -16,6 +16,12 @@ export class PostMongoRepo implements IPostRepo{
         console.log('Connecting to MongoDB...');
      }
 
+    async delete(delPost: Post): Promise<boolean> {
+        await this.connectToDB();
+        const result = await this._collection.deleteOne({ id: delPost.id });
+        return result.deletedCount === 1;
+    }
+
      async getAll(): Promise<Post[]> {
         await this.connectToDB();
         const results = await this._collection.find().toArray();

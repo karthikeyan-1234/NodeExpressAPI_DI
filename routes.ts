@@ -7,5 +7,6 @@ router.get('/', PostController.findProduct)
 router.get('/getAll', PostController.getAllProducts)
 router.post('/',PostController.addProduct)
 router.put('/', PostController.updateProduct)
+router.delete('/',PostController.deleteProduct)
 
 export default router;

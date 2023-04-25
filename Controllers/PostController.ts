@@ -21,4 +21,46 @@ const findProduct = async function (req: Request ,res: Response){
 
 }
 
-export default findProduct;
+const addProduct = async function(req: Request, res: Response){
+    const result = await postService.addPost(req.body);
+
+    if(result != null)
+    {
+        console.log(result);
+        res.status(200).send(JSON.stringify(result));
+    }
+    else
+        res.status(422).send("Unable to add data");
+}
+
+const updateProduct = async function(req: Request,res: Response){
+
+    console.log("---Update Product endpoint---")
+    console.log(req.body);
+
+    const result = await postService.updatePost(req.body);
+
+    if(result != null)
+    {
+        console.log(result);
+        res.status(200).send(JSON.stringify(result));
+    }
+    else
+        res.status(422).send("Unable to update data");
+}
+
+const getAllProducts = async function(req: Request, res: Response){
+    console.log("---Get all Products endpoint---");
+    
+    const result = await postService.getAllPosts();
+
+    if(result != null)
+    {
+        console.log(result);
+        res.status(200).send(JSON.stringify(result));
+    }
+    else
+        res.status(404).send("No records found");
+}
+
+export default {findProduct,addProduct, updateProduct, getAllProducts};

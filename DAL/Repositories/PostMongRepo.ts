@@ -16,10 +16,36 @@ export class PostMongoRepo implements IPostRepo{
         console.log('Connecting to MongoDB...');
      }
 
+     async getAll(): Promise<Post[]> {
+        await this.connectToDB();
+        const results = await this._collection.find().toArray();
+        return results.map(res => new Post(res.id));
+      }
+      
+
+
+    async update(updPost: Post): Promise<Post | null> {
+
+        console.log("---Mongo Repo - Update---");
+        console.log(updPost);
+
+        await this.connectToDB();
+        await this._collection.updateOne({ id: updPost.id }, { $set: updPost });
+
+        return updPost;
+    }
+
+
     async connectToDB(){
         const connection = await MongoClient.connect('mongodb://localhost');
         const db = connection.db('MyDB');
         this._collection = await db.collection("MyCollection");
+    }
+
+    async add(newPost: Post): Promise<Post | null> {
+        await this.connectToDB();
+        await this._collection.insertOne(newPost);
+        return newPost;
     }
 
     async find(id: number): Promise<Post | null> {

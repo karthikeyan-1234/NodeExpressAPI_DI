@@ -12,11 +12,53 @@ export class PostService implements IPostService
         this.IPostRepo = IPostRepo;
         this.ICacheService = ICacheService;
     }
-    addPost(newPost: Post): Post {
-        throw new Error("Method not implemented.");
+
+    async addPost(newPost: Post): Promise<Post | null> {
+        try{
+        return await this.IPostRepo.add(newPost);
+        }
+        catch(error){
+            console.log(error);
+            return null;
+        }
     }
-    updatePost(upPost: Post): Post {
-        throw new Error("Method not implemented.");
+
+    async getAllPosts(): Promise<Post[] | null>{
+
+        console.log("---getAllPosts Service---")
+
+        var res = await this.ICacheService.getCache("All_Posts");
+        console.log(res);
+
+        if(res == null)
+        {
+           var posts = await this.IPostRepo.getAll();
+
+           if(posts != null)
+           {
+               await this.ICacheService.setCache("All_Posts",JSON.stringify(posts),10);
+               return Promise.resolve(posts);
+           }
+           else
+               return Promise.resolve(null);
+        }
+        else
+        {
+            console.log("From CacheService ");
+            var _posts = JSON.parse(res as string);
+            console.log(_posts);
+            return Promise.resolve(_posts);
+        }
+    }
+
+    async updatePost(upPost: Post): Promise<Post | null>{
+
+        console.log("---UpdatePost Service---")
+        console.log(upPost);
+
+        const post = await this.IPostRepo.update(upPost);
+        await this.ICacheService.setCache("Post_" + post!.id,JSON.stringify(post),10);
+        return Promise.resolve(post);
     }
     deletePost(delPost: Post): Post {
         throw new Error("Method not implemented.");

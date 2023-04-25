@@ -1,7 +1,9 @@
-import express from "express"
+import express from "express";
+import bodyParser from "body-parser";
 import routes from "./routes";
 
 const app = express();
+app.use(bodyParser.json());
 const port = 3000;
 
 app.use(routes);

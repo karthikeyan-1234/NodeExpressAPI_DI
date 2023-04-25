@@ -18,8 +18,8 @@ export class PostMongoRepo implements IPostRepo{
 
     async delete(delPost: Post): Promise<boolean> {
         await this.connectToDB();
-        const result = await this._collection.deleteOne({ id: delPost.id });
-        return result.deletedCount === 1;
+        const result = await this._collection.deleteMany({ id: delPost.id });
+        return result.deletedCount > 0;
     }
 
      async getAll(): Promise<Post[]> {

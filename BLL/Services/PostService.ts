@@ -1,5 +1,5 @@
 import ICacheService from "../../Contracts/ICacheService";
-import IPostRepo from "../../Contracts/IPostRepo";
+import IPostRepo, { SearchCriteria } from "../../Contracts/IPostRepo";
 import IPostService from "../../Contracts/IPostService";
 import Post from "../../Models/Post";
 
@@ -60,6 +60,7 @@ export class PostService implements IPostService
         await this.ICacheService.setCache("Post_" + post!.id,JSON.stringify(post),10);
         return Promise.resolve(post);
     }
+
     deletePost(delPost: Post): Promise<boolean> {
         try
         {
@@ -70,31 +71,39 @@ export class PostService implements IPostService
         }
     }
 
-    async findPost(id: number): Promise<Post | null> {   
+    async findPost(start_id: number, end_id:number): Promise<Post[] | null> {   
         
         console.log("---FindPost Service----");
-        var res = await this.ICacheService.getCache("Post_" + id);
+        var res = await this.ICacheService.getCache("Post_" + start_id + end_id);
 
-        console.log("FindPost result of cache");
+        console.log("---FindPost result of cache---");
         console.log(res);
+
+
 
         if(res == null)
         {
-            const post = await this.IPostRepo.find(id);
+            console.log("---FindPost using IPostRepo---");
+
+            const post = await this.IPostRepo.search(
+                { 
+                    id: { $gte: start_id, $lte: end_id }, 
+                    //name: { $regex: /^AB/i }
+                } as unknown as SearchCriteria<Post>);
+
             console.log(post);
 
             if(post != null)
             {
-                console.log("---Service----");
-                console.log("From repo");
-                await this.ICacheService.setCache("Post_" + id,JSON.stringify(post),10);
+                console.log("---FindPost setting cache----");
+                await this.ICacheService.setCache("Post_" + start_id + end_id,JSON.stringify(post),10);
                 return Promise.resolve(post);
             }
             else
                 return Promise.resolve(null);
         }
         else{
-            console.log("From CacheService ");
+            console.log("---FindPost From CacheService---");
             var _post = JSON.parse(res as string);
             console.log(_post);
             return Promise.resolve(_post);

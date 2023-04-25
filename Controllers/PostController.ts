@@ -8,7 +8,7 @@ const findProduct = async function (req: Request ,res: Response){
 
     console.log("---Controller----")
 
-    const result = await postService.findPost(15);
+    const result = await postService.findPost(req.body.start_id,req.body.end_id);
 
     if(result != null)
     {
@@ -53,6 +53,22 @@ const getAllProducts = async function(req: Request, res: Response){
     console.log("---Get all Products endpoint---");
     
     const result = await postService.getAllPosts();
+    //const result = await postService.findAny();
+
+    if(result != null)
+    {
+        console.log(result);
+        res.status(200).send(JSON.stringify(result));
+    }
+    else
+        res.status(404).send("No records found");
+}
+
+const findProductByCriteria = async function(req: Request, res: Response){
+    console.log("---Get all Products endpoint---");
+    
+    //const result = await postService.getAllPosts();
+    const result = await postService.findAny(req.body);
 
     if(result != null)
     {
@@ -77,4 +93,4 @@ const deleteProduct = async function(req: Request, res: Response){
         res.status(404).send("Unable to delete data. No record found");   
 }
 
-export default {findProduct,addProduct, updateProduct, getAllProducts, deleteProduct};
+export default {findProduct,addProduct, updateProduct, getAllProducts, deleteProduct,findProductByCriteria};

@@ -9,20 +9,18 @@ export class PostServiceLogger implements IPostService
     constructor({IPostRepo}:{IPostRepo: IPostRepo}) {
         this.IPostRepo = IPostRepo;
     }
+    findPost(id: number): Promise<Post[] | null> {
+        throw new Error("Method not implemented.");
+    }
+    deletePost(delPost: Post): Promise<boolean> {
+        throw new Error("Method not implemented.");
+    }
     addPost(newPost: Post): Promise<Post | null> {
         throw new Error("Method not implemented.");
     }
     updatePost(upPost: Post): Promise<Post | null> {
         throw new Error("Method not implemented.");
     }
-    deletePost(delPost: Post): Post | null {
-        throw new Error("Method not implemented.");
-    }
 
-
-    async findPost(id: number): Promise<Post | null> {
-        console.log("Initiated from PostService Logger");
-        return this.IPostRepo.find(id);
-    }
     
 }
